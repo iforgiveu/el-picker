@@ -2,22 +2,42 @@ window.k=console.log//方便用
 window.dk=console.dir//方便用
 window.els=document.querySelector.bind(document)
 window.ela=document.querySelectorAll.bind(document)
+//可以els`.abc`    也可以els('.abc')
+
+
 document.addEventListener('__picker-store-el0', function (e) {
     // composedPath()[0] 拿到原始目标（Shadow DOM 内的元素也不会被重定向到 host）
     const el = (e.composedPath && e.composedPath()[0]) || e.target;
-    window.el0 = el;         
+    window.el0 = el;          // 也可以改成 window.tempelsss(el)，效果一样
     showNotification('已存入主世界window.el0','success');
 	console.log('已存入主世界 window.el0', el);
 });
-window.CopyAdgRuleToClipboard = function(text) {
-    navigator.clipboard.writeText(text)
-	.then(() => {
-            showNotification('复制成功','success');
-        })
-	.catch(err => {
-        console.error('复制失败:', err);
-    });
+/*window.CopyAdgRuleToClipboard = function(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+            .then(() => showNotification('复制成功', 'success'))
+            .catch(() => fallbackCopy(text));
+    } else {
+        fallbackCopy(text);
+    }
 };
+
+function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    ta.remove();
+    showNotification(ok ? '复制成功' : '复制失败', ok ? 'success' : 'error');
+}*/
+
+
+
+
 
 function showNotification(message, type = 'info') {
     const notif = document.createElement('div');
